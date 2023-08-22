@@ -1,0 +1,15 @@
+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
+
+cd videoproject
+git add .
+git commit -m "commit message"
+git push origin master
+
+git add README.md
+
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/dadaWilliam/xueba.git
+git push -u origin main
