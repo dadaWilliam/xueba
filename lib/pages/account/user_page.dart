@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -15,6 +18,7 @@ import 'package:xueba/widgets/big_text.dart';
 import 'package:get/get.dart';
 
 import '../../routes/route_helper.dart';
+import 'package:http/http.dart' as http;
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -276,7 +280,7 @@ class _UserPageState extends State<UserPage> {
                       child: AccountWidgt(
                           appIcon: AppIcon(
                             icon: Icons.celebration_rounded,
-                            backgroundColor: Colors.deepOrange,
+                            backgroundColor: Colors.pinkAccent,
                             iconColor: Colors.white,
                             size: Dimensions.iconSize24 * 2,
                             iconSize: Dimensions.iconSize24,
@@ -331,6 +335,50 @@ class _UserPageState extends State<UserPage> {
                             text: '修改密码',
                             size: Dimensions.font18,
                           )),
+                    ),
+                    SizedBox(
+                      height: Dimensions.height10,
+                    ),
+                    // pwd
+                    Platform.isIOS
+                        ? GestureDetector(
+                            onTap: (() {
+                              AwesomeDialog(
+                                width: Dimensions.width45 * 10,
+                                context: context,
+                                dialogType: DialogType.warning,
+                                animType: AnimType.scale,
+                                title: '注意⚠️',
+                                desc: '删除账户操作不可逆，是否确定删除',
+                                btnOkText: '确定',
+                                btnCancelText: '取消',
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () async {
+                                  await http.get(Uri.parse(
+                                      '${AppConstants.URL}${AppConstants.DELETEUSER}/?tk=$Token'));
+                                  Get.find<AuthController>().clearSharedData();
+                                  Get.offAllNamed(RouteHelper.getLogIn());
+                                },
+                              ).show();
+                              // Get.toNamed(RouteHelper.getwebPage(
+                              //     AppConstants.CHANGEPWD, '修改密码'));
+                            }),
+                            child: AccountWidgt(
+                                appIcon: AppIcon(
+                                  icon: Icons.person_off_rounded,
+                                  backgroundColor: Colors.lightGreen,
+                                  iconColor: Colors.white,
+                                  size: Dimensions.iconSize24 * 2,
+                                  iconSize: Dimensions.iconSize24,
+                                ),
+                                bigText: BigText(
+                                  text: '删除账户',
+                                  size: Dimensions.font18,
+                                )),
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: Dimensions.height10,
                     ),
                   ],
                 ),

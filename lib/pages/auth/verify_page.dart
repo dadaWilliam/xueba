@@ -67,6 +67,7 @@ class _VerifyPageState extends State<VerifyPage> {
                   // await Get.find<UserController>().getUserInfo(user_id);
                   if (state) {
                     AwesomeDialog(
+                      width: Dimensions.width45 * 10,
                       context: context,
                       dialogType: DialogType.success,
                       animType: AnimType.scale,
@@ -141,6 +142,7 @@ class _VerifyPageState extends State<VerifyPage> {
                     if (times >= 3) {
                       times = 1;
                       AwesomeDialog(
+                        width: Dimensions.width45 * 10,
                         context: context,
                         dialogType: DialogType.error,
                         animType: AnimType.scale,
@@ -155,6 +157,7 @@ class _VerifyPageState extends State<VerifyPage> {
                       ).show();
                     } else {
                       AwesomeDialog(
+                        width: Dimensions.width45 * 10,
                         context: context,
                         dialogType: DialogType.error,
                         animType: AnimType.scale,

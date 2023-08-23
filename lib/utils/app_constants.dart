@@ -22,6 +22,7 @@ class AppConstants {
   static const String FILE = '/file';
   static const String CHECKQRCODE = '/users/check-qrcode';
   static const String AD = "/api/ad";
+  static const String DELETEUSER = "/api/user-delete";
 
   static String Token = '';
 }

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 import 'package:xueba/controller/auth_controller.dart';
@@ -27,7 +30,9 @@ Future<void> _launchUrl(String url) async {
   try {
     await launchUrl(
       Uri.parse(url),
-      mode: LaunchMode.externalApplication,
+      mode: Platform.isAndroid
+          ? LaunchMode.externalApplication
+          : LaunchMode.inAppWebView,
     );
   } catch (e) {
     debugPrint(e.toString());
@@ -391,8 +396,27 @@ class _ContentPageState extends State<ContentPage> {
                         // Get.toNamed(RouteHelper.getwebPage(
                         //     '${AppConstants.FILE}?tk=$Token',
                         //     '文件中心'));
-                        _launchUrl(
-                            '${AppConstants.URL}${AppConstants.FILE}?tk=$Token');
+                        if (Platform.isAndroid) {
+                          AwesomeDialog(
+                            context: context,
+                            width: Dimensions.width45 * 10,
+                            dialogType: DialogType.info,
+                            animType: AnimType.scale,
+                            title: '注意',
+                            desc: '即将打开 系统浏览器 进行下载 ！',
+                            btnOkText: '我知道了',
+                            // btnCancelText: '取消',
+                            // btnCancelOnPress: () {},
+                            btnOkOnPress: () {
+                              _launchUrl(
+                                  '${AppConstants.URL}${AppConstants.FILE}?tk=$Token');
+                            },
+                          ).show();
+                        } else {
+                          _launchUrl(
+                              '${AppConstants.URL}${AppConstants.FILE}?tk=$Token');
+                        }
+
                         // Get.toNamed(RouteHelper.getUserPage());
                         //showCustomNoticeSnacker("如错误，请联系管理员!", title: "学霸空间");
                       }),

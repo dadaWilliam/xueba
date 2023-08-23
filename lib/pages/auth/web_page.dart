@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../utils/app_constants.dart';
@@ -116,9 +117,9 @@ class _WebPageState extends State<WebPage> {
                   controller.loadRequest(Uri.parse(homeUrl));
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () async {
+              GestureDetector(
+                onDoubleTap: () => Get.back(),
+                onTap: () async {
                   if (await controller.canGoBack()) {
                     controller.goBack();
                   } else {
@@ -137,7 +138,7 @@ class _WebPageState extends State<WebPage> {
                             width: Dimensions.width5,
                           ),
                           BigText(
-                            text: '不能返回啦',
+                            text: '不能返回啦 , 双击两次退出',
                             size: Dimensions.font18,
                             color: Colors.white,
                           ),
@@ -148,8 +149,50 @@ class _WebPageState extends State<WebPage> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0), // Adjust the padding as needed
+                  child: Icon(
+                    Icons.arrow_back,
+                    // Adjust the size and color of the icon as needed
+                  ),
+                ),
               ),
-              // You can add more icons here for more functionality
+
+              // IconButton(
+              //   icon: const Icon(Icons.arrow_back),
+              //   onPressed: () async {
+              //     if (await controller.canGoBack()) {
+              //       controller.goBack();
+
+              //     } else {
+              //       var snackBar = SnackBar(
+              //         backgroundColor: Colors.red.withOpacity(0.95),
+              //         content: Row(
+              //           mainAxisSize: MainAxisSize.min,
+              //           crossAxisAlignment: CrossAxisAlignment.center,
+              //           children: [
+              //             Icon(
+              //               Icons.error_outline_rounded,
+              //               color: Colors.white,
+              //               size: Dimensions.iconSize24,
+              //             ),
+              //             SizedBox(
+              //               width: Dimensions.width5,
+              //             ),
+              //             BigText(
+              //               text: '不能返回啦',
+              //               size: Dimensions.font18,
+              //               color: Colors.white,
+              //             ),
+              //           ],
+              //         ),
+              //       );
+
+              //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              //     }
+              //   },
+              // ),
+              // // You can add more icons here for more functionality
             ],
           ),
         ));

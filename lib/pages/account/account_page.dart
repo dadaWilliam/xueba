@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:xueba/controller/auth_controller.dart';
 import 'package:xueba/controller/user_controller.dart';
@@ -19,6 +22,17 @@ class AccountPage extends StatefulWidget {
 
   @override
   State<AccountPage> createState() => _AccountPageState();
+}
+
+Future<void> _launchUrl(String url) async {
+  try {
+    await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
+  } catch (e) {
+    debugPrint(e.toString());
+  }
 }
 
 class _AccountPageState extends State<AccountPage> {
@@ -401,9 +415,27 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                     GestureDetector(
                       onTap: (() {
-                        Get.toNamed(RouteHelper.getwebPage(
-                            '${AppConstants.FEEDBACK}?tk=$Token', '反馈问题'));
-                        //showCustomNoticeSnacker("如错误，请联系管理员!", title: "学霸空间");
+                        if (Platform.isAndroid) {
+                          AwesomeDialog(
+                            context: context,
+                            width: Dimensions.width45 * 10,
+                            dialogType: DialogType.info,
+                            animType: AnimType.scale,
+                            title: '注意',
+                            desc: '即将打开 系统浏览器 进行填写 ！',
+                            btnOkText: '我知道了',
+                            // btnCancelText: '取消',
+                            // btnCancelOnPress: () {},
+                            btnOkOnPress: () {
+                              _launchUrl(
+                                  '${AppConstants.URL}${AppConstants.FEEDBACK}?tk=$Token');
+                            },
+                          ).show();
+                        } else {
+                          Get.toNamed(RouteHelper.getwebPage(
+                              '${AppConstants.FEEDBACK}?tk=$Token', '反馈问题'));
+                          //showCustomNoticeSnacker("如错误，请联系管理员!", title: "学霸空间");
+                        }
                       }),
                       child: AccountWidgt(
                           appIcon: AppIcon(
@@ -429,7 +461,7 @@ class _AccountPageState extends State<AccountPage> {
                       child: AccountWidgt(
                           appIcon: AppIcon(
                             icon: Icons.book_rounded,
-                            backgroundColor: Colors.orangeAccent,
+                            backgroundColor: Colors.deepPurpleAccent,
                             iconColor: Colors.white,
                             size: Dimensions.iconSize24 * 2,
                             iconSize: Dimensions.iconSize24,

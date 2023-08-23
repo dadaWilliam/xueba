@@ -39,7 +39,7 @@ class AuthController extends GetxController implements GetxService {
         // ).show();
         showCustomSnacker("密码或用户名错误!", title: "出错啦");
       } else if (response.body["code"] == 1002) {
-        showCustomSnacker("用户过期啦! 请联系管理员！", title: "出错啦");
+        showCustomSnacker("用户过期或不存在! 请联系管理员！", title: "出错啦");
       } else {
         showCustomSnacker("请稍后再试!", title: "出错啦");
       }
