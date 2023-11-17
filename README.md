@@ -2,7 +2,7 @@
 
 ## About The Project
 
-Xueba is a online learning platform working with **[Xueba web]()** as its **API**
+Xueba is a online learning platform **Flutter APP** working with **[Xueba web]()** as its **API**
 
 ### Features
 
