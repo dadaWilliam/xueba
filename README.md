@@ -1,6 +1,6 @@
-# Xueba APP
+# Xueba APP ![](https://img.shields.io/badge/flutter-3.13.9-blue?style=for-the-badge&logo=flutter&logoColor=blue)
 
-## About The Project
+## About The Project 
 
 Xueba is a online learning platform **Flutter APP** working with **[Xueba web]()** as its **API**
 
